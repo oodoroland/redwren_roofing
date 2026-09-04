@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Eyebrow } from "@/app/components/ui/Eyebrow";
 import { diagnosticItems } from "@/app/data/diagnostic-items";
@@ -27,23 +28,32 @@ export function DiagnosticIndex() {
           <Link
             key={item.title}
             href={`/request?discipline=${encodeURIComponent(item.disciplineValue)}`}
-            className="group flex flex-col justify-between rounded-xl bg-surface-container p-8 transition-all hover:bg-surface-container-high"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-xl bg-surface-container p-8 transition-colors hover:bg-surface-container-high"
           >
-            <div>
+            <Image
+              src={item.image.src}
+              alt={item.image.alt}
+              fill
+              sizes="(min-width: 1024px) 33vw, 100vw"
+              className="scale-110 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/85 to-primary/40 opacity-0 transition-opacity duration-500 group-hover:opacity-95" />
+
+            <div className="relative z-10">
               <div className="mb-6 flex items-center justify-between">
-                <item.icon className="h-8 w-8 text-primary" />
-                <span className="font-mono text-label-sm text-on-surface-variant">
+                <item.icon className="h-8 w-8 text-primary transition-colors group-hover:text-on-primary" />
+                <span className="font-mono text-label-sm text-on-surface-variant transition-colors group-hover:text-primary-fixed-dim">
                   {item.code}
                 </span>
               </div>
-              <h3 className="mb-2 font-serif text-headline-sm text-primary transition-colors group-hover:text-tertiary-container">
+              <h3 className="mb-2 font-serif text-headline-sm text-primary transition-colors group-hover:text-on-primary">
                 {item.title}
               </h3>
-              <p className="font-sans text-body-sm text-on-surface-variant">
+              <p className="font-sans text-body-sm text-on-surface-variant transition-colors group-hover:text-primary-fixed-dim">
                 {item.description}
               </p>
             </div>
-            <div className="mt-8 flex items-center gap-2 font-sans text-label-md uppercase text-primary">
+            <div className="relative z-10 mt-8 flex items-center gap-2 font-sans text-label-md uppercase text-primary transition-colors group-hover:text-tertiary-fixed-dim">
               <span>{item.ctaLabel}</span>
               <ArrowRight className="h-4 w-4" />
             </div>
